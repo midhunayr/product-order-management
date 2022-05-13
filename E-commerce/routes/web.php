@@ -46,14 +46,16 @@ Route::prefix('admin/')->name('user.')->middleware('auth')->group(function () {
 
     Route::get('addorderview', [OrderController::class, 'addOrderView'])->name('addorderview');
     Route::post('storeorder', [OrderController::class, 'storeOrder'])->name('storeorder');
-    Route::get('productview/{id}', [OrderController::class, 'productView'])->name('productview');
+    Route::get('productview/{id}', [OrderController::class, 'productView'])->name('productview'); //for adding order
 
     Route::post('storeproductorder/{id}', [OrderController::class, 'storeProductOrder'])->name('storeproductorder');
     Route::get('listorders', [OrderController::class, 'listOrders'])->name('listorders');
     Route::get('editorder/{cusid}', [OrderController::class, 'editOrderView'])->name('editorder');
     Route::post('{order}/updateorder', [OrderController::class, 'updateOrder'])->name('updateorder');
+    Route::get('printpdf/{id}', [OrderController::class, 'printPdf'])->name('printpdf');
 
-    Route::get('{product}/deleteproduct', [OrderController::class, 'destroyProduct'])->name('deleteproduct');
+
+    Route::get('{product}/deleteproduct', [ProductController::class, 'destroyProduct'])->name('deleteproduct');
     Route::get('{category}/deletecategory', [ProductController::class, 'destroyCategory'])->name('deletecategory');
     Route::get('{product}/deleteorderproduct', [OrderController::class, 'destroyOrderProduct'])->name('deleteorderproduct');
     Route::get('{order}/deleteorder', [OrderController::class, 'destroyOrder'])->name('deleteorder');

@@ -22,7 +22,7 @@ class OrderDetails extends Model
 
     public function Product()
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(Product::class, 'product_id')->withTrashed();
     }
 
     public function customer()

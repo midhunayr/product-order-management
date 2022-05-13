@@ -52,6 +52,40 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">products</label>
+                                    @foreach ($orderdetails as $key => $value)
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="product" name="product"
+                                                placeholder="customer name" value="{{ $value->product->product_name }}">
+                                            <p class="product" style="color: red"></p>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="col-md-2 ">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Product</label>
+                                        <select name="product_id" class="form-control" id="product">
+                                            @foreach ($products as $key => $value)
+                                                <option>{{ $value->product_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-1">
+                                    <label for="exampleInputEmail1">Quantity</label>
+                                    <input type="number" class="form-control" id="quantity" name="quantity"
+                                        placeholder="quantity" value="1" min="1">
+                                </div>
+                            </div>
+
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-dark" data-bs-toggle="modal"
                                     data-bs-target="#ordermodal">Submit</button>
@@ -60,7 +94,6 @@
                     </div>
 
                 </div>
-
             </div>
         </section>
     </div>

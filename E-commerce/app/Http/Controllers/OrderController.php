@@ -29,11 +29,6 @@ class OrderController extends Controller
     {
         //dd('hii');
         $id = $this->orderRepo->createOrder($request->all());
-        // dd($id);
-        // $customer = Customer::find($id);
-        // $products = Product::get();
-        // return view('pages.productsview', compact('products', 'customer', 'id'));
-        // dd(redirect()->route('user.productview'));
         return redirect()->route('user.productview', $id);
     }
 
@@ -65,23 +60,22 @@ class OrderController extends Controller
     public function listOrders()
     {
         $orders = Customer::get();
-        // dd($orders);
-        // $data = $this->orderRepo->getTotalSum();
-        // dd($data);
         return view('pages.listorders', compact('orders'));
     }
 
 
     public function editOrderView($cusid)
     {
-
+        $products = Product::get();
         $order = $this->orderRepo->editOrder($cusid);
-        return view('pages.editorderdetails', compact('order'));
+        $orderdetails = $this->orderRepo->editOrderDetails($cusid);
+        // dd($orderdetails);
+        return view('pages.editorderdetails', compact('order', 'orderdetails', 'products'));
     }
 
     public function updateOrder(Request $request, $id)
     {
-        $this->orderRepo->updateCustomer($id, $request);
+        $this->orderRepo->updateOrderDetails($id, $request);
         return response()->json(['status' => 200, 'message' => 'success']);
     }
 
@@ -90,5 +84,15 @@ class OrderController extends Controller
 
         $this->orderRepo->deleteorder($id);
         return response()->json(['status' => 200, 'message' => 'success']);
+    }
+
+    public function printPdf($id)
+    {
+        // dd($id);
+        $customer = $this->orderRepo->getPrintCustomer($id);
+        $order = $this->orderRepo->getPrintOrder($id);
+        $sum = $this->orderRepo->getTotalAmount($id);
+
+        return view('pages.print', compact('customer', 'order', 'sum'));
     }
 }

@@ -92,9 +92,20 @@ class OrderRepository
         return Customer::where('id', $cusid)->first();
     }
 
-
-    public function updateCustomer($id, $data)
+    public static function editOrderDetails($cusid)
     {
+        return OrderDetails::with('product')->where('customer_id', $cusid)->get();
+    }
+
+
+    public function updateOrderDetails($id, $data)
+    {
+        // dd($id);
+        $orderdetails = OrderDetails::find($id);
+        $orderdetails->product_id = $data['product_id'];
+        $orderdetails->quantity = $data['quantity'];
+        $orderdetails->save();
+
         $customer = Customer::find($id);
         if (empty($customer)) {
             return null;
@@ -107,6 +118,7 @@ class OrderRepository
         return $customer;
     }
 
+
     public static function deleteorder($id)
     {
         $data = OrderDetails::where('customer_id', $id)->delete();
@@ -117,9 +129,20 @@ class OrderRepository
     public static function getTotalSum($id)
     {
         return OrderDetails::select(DB::raw('sum(total_price) as total'))->where('customer_id', $id)->first();
+    }
 
-        // OrderDetails::groupBy('customer_id')
-        //     ->selectRaw('sum(total_price) as sum, customer_id')
-        //     ->pluck('sum', 'customer_id');
+    public static function getTotalAmount($cus_id)
+    {
+        return OrderDetails::select(DB::raw('sum(total_price) as total'))->where('customer_id', $cus_id)->first();
+    }
+
+    public static function getPrintCustomer($id)
+    {
+        return Customer::find($id);
+    }
+
+    public static function getPrintOrder($id)
+    {
+        return OrderDetails::with('product')->where('customer_id', $id)->get();
     }
 }

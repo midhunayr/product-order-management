@@ -64,6 +64,10 @@
                                                         data-url=""><span class="bi bi-trash"></span>
                                                     </button>
 
+                                                    <a href="{{ route('user.printpdf', ['id' => $value->id]) }}"><button
+                                                            type="button" onclick="" class="btn btn-dark btn-sm"><span
+                                                                class='bi bi-file-pdf'></span></button></a>
+
                                                 </td>
                                             </tr>
                                         @endforeach
